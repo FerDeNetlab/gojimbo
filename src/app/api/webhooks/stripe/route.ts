@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
         }
 
         case "customer.subscription.updated": {
-            const sub = event.data.object as Record<string, unknown>;
+            const sub = event.data.object as unknown as Record<string, unknown>;
             const stripeSubId = sub.id as string;
 
             await db

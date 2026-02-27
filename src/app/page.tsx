@@ -97,8 +97,8 @@ function DemoMembers() {
               <td className="py-2.5">
                 <span
                   className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full ${m.status === "Activo"
-                      ? "bg-jimbo-accent/10 text-jimbo-accent"
-                      : "bg-yellow-500/10 text-yellow-400"
+                    ? "bg-jimbo-accent/10 text-jimbo-accent"
+                    : "bg-yellow-500/10 text-yellow-400"
                     }`}
                 >
                   <span
@@ -449,7 +449,7 @@ export default function LandingPage() {
             <Reveal delay={0.15}>
               <div className="relative">
                 <div className="absolute inset-0 rounded-3xl" style={{ background: "radial-gradient(circle, rgba(0,255,136,0.06) 0%, transparent 70%)" }} />
-                <div className="relative bg-jimbo-card rounded-3xl border border-jimbo-border p-8">
+                <div className="relative bg-white rounded-3xl border border-jimbo-border p-8">
                   <Image src="/images/jimbokit.png" alt="JimboKit — Puertas de cortesía" width={600} height={500} className="w-full h-auto object-contain" />
                 </div>
               </div>

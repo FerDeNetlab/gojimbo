@@ -5,22 +5,19 @@ export default authMiddleware((req) => {
     const { pathname } = req.nextUrl;
     const isAuthenticated = !!req.auth;
 
-    // Protected routes (gym product)
-    const protectedPaths = ["/admin", "/onboarding"];
+    // Protected routes
+    const protectedPaths = ["/admin", "/onboarding", "/saas"];
     const isProtected = protectedPaths.some((p) => pathname.startsWith(p));
 
-    // SaaS routes (superadmin only)
-    const isSaaS = pathname.startsWith("/saas");
-
-    if ((isProtected || isSaaS) && !isAuthenticated) {
+    if (isProtected && !isAuthenticated) {
         return NextResponse.redirect(new URL("/login", req.url));
     }
 
-    // SaaS: only superadmin
-    if (isSaaS && req.auth?.user) {
-        const role = (req.auth.user as { role?: string }).role;
+    // /admin and /saas: only superadmin
+    if ((pathname.startsWith("/admin") || pathname.startsWith("/saas")) && isAuthenticated) {
+        const role = (req.auth?.user as { role?: string })?.role;
         if (role !== "superadmin") {
-            return NextResponse.redirect(new URL("/admin", req.url));
+            return NextResponse.redirect(new URL("/login", req.url));
         }
     }
 
@@ -31,7 +28,8 @@ export default authMiddleware((req) => {
         if (role === "superadmin") {
             return NextResponse.redirect(new URL("/saas", req.url));
         }
-        return NextResponse.redirect(new URL("/admin", req.url));
+        // For gym_owner: let the login/register page handle the redirect via /api/me/gym
+        // We don't redirect here because we need to check the gym slug from the DB
     }
 
     return NextResponse.next();

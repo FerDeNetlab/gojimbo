@@ -63,7 +63,7 @@ function RegisterForm() {
                     router.push("/onboarding");
                 }
             } else {
-                router.push("/admin");
+                router.push("/onboarding");
             }
         } catch {
             setError("Error de conexión");

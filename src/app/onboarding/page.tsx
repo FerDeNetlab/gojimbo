@@ -34,7 +34,7 @@ export default function OnboardingPage() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(form),
             });
-            router.push("/admin");
+            router.push(`/${form.slug}`);
         } catch {
             setLoading(false);
         }

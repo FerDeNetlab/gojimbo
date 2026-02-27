@@ -9,7 +9,8 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: "No autorizado" }, { status: 401 });
         }
 
-        const { mode } = await req.json();
+        const body = await req.json();
+        const mode = body.mode || body.type;
         const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
         if (mode === "subscription") {
@@ -58,7 +59,7 @@ export async function POST(req: NextRequest) {
                         quantity: 1,
                     },
                 ],
-                success_url: `${appUrl}/dashboard?jimbokit=success`,
+                success_url: `${appUrl}/admin?jimbokit=success`,
                 cancel_url: `${appUrl}/#jimbokit`,
             });
 

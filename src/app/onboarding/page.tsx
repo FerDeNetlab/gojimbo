@@ -34,7 +34,7 @@ export default function OnboardingPage() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(form),
             });
-            router.push("/dashboard");
+            router.push("/admin");
         } catch {
             setLoading(false);
         }
@@ -137,8 +137,8 @@ export default function OnboardingPage() {
                                             key={opt}
                                             onClick={() => handleChange("approxMembers", opt)}
                                             className={`p-4 rounded-xl border text-center font-medium transition-all cursor-pointer ${form.approxMembers === opt
-                                                    ? "border-jimbo-accent bg-jimbo-accent/10 text-jimbo-accent"
-                                                    : "border-jimbo-border text-jimbo-muted hover:border-jimbo-muted"
+                                                ? "border-jimbo-accent bg-jimbo-accent/10 text-jimbo-accent"
+                                                : "border-jimbo-border text-jimbo-muted hover:border-jimbo-muted"
                                                 }`}
                                         >
                                             {opt}
@@ -168,8 +168,8 @@ export default function OnboardingPage() {
                                 <button
                                     onClick={() => handleChange("wantsJimboKit", true)}
                                     className={`p-4 rounded-xl border text-center font-medium transition-all cursor-pointer ${form.wantsJimboKit
-                                            ? "border-jimbo-accent bg-jimbo-accent/10 text-jimbo-accent"
-                                            : "border-jimbo-border text-jimbo-muted hover:border-jimbo-muted"
+                                        ? "border-jimbo-accent bg-jimbo-accent/10 text-jimbo-accent"
+                                        : "border-jimbo-border text-jimbo-muted hover:border-jimbo-muted"
                                         }`}
                                 >
                                     Sí, lo quiero
@@ -177,8 +177,8 @@ export default function OnboardingPage() {
                                 <button
                                     onClick={() => handleChange("wantsJimboKit", false)}
                                     className={`p-4 rounded-xl border text-center font-medium transition-all cursor-pointer ${!form.wantsJimboKit
-                                            ? "border-jimbo-accent bg-jimbo-accent/10 text-jimbo-accent"
-                                            : "border-jimbo-border text-jimbo-muted hover:border-jimbo-muted"
+                                        ? "border-jimbo-accent bg-jimbo-accent/10 text-jimbo-accent"
+                                        : "border-jimbo-border text-jimbo-muted hover:border-jimbo-muted"
                                         }`}
                                 >
                                     Por ahora no

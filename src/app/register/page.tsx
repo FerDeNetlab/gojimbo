@@ -49,19 +49,6 @@ function RegisterForm() {
 
             if (loginRes?.error) {
                 router.push("/login");
-            } else if (plan === "subscription") {
-                // Redirect to Stripe checkout
-                const checkoutRes = await fetch("/api/checkout", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ type: "subscription" }),
-                });
-                const checkoutData = await checkoutRes.json();
-                if (checkoutData.url) {
-                    window.location.href = checkoutData.url;
-                } else {
-                    router.push("/onboarding");
-                }
             } else {
                 router.push("/onboarding");
             }

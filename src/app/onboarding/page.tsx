@@ -34,9 +34,22 @@ export default function OnboardingPage() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(form),
             });
-            router.push(`/${form.slug}`);
+
+            // Redirect to Stripe checkout
+            const checkoutRes = await fetch("/api/checkout", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ type: "subscription" }),
+            });
+            const checkoutData = await checkoutRes.json();
+            if (checkoutData.url) {
+                window.location.href = checkoutData.url;
+            } else {
+                // Fallback: go to slug (paywall will catch them)
+                router.push(`/${form.slug}`);
+            }
         } catch {
-            setLoading(false);
+            router.push(`/${form.slug}`);
         }
     };
 

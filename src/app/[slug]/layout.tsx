@@ -17,14 +17,37 @@ import {
     X,
     DoorOpen,
     LifeBuoy,
+    Lock,
+    ArrowRight,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function GymLayout({ children }: { children: React.ReactNode }) {
     const { data: session } = useSession();
     const params = useParams();
     const slug = params.slug as string;
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [subStatus, setSubStatus] = useState<"loading" | "active" | "inactive">("loading");
+    const [checkoutLoading, setCheckoutLoading] = useState(false);
+
+    useEffect(() => {
+        fetch("/api/me/subscription")
+            .then((r) => r.json())
+            .then((data) => setSubStatus(data.active ? "active" : "inactive"))
+            .catch(() => setSubStatus("inactive"));
+    }, []);
+
+    const handleCheckout = async () => {
+        setCheckoutLoading(true);
+        const res = await fetch("/api/checkout", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ type: "subscription" }),
+        });
+        const data = await res.json();
+        if (data.url) window.location.href = data.url;
+        setCheckoutLoading(false);
+    };
 
     const navItems = [
         { icon: BarChart3, label: "Dashboard", href: `/${slug}` },
@@ -37,6 +60,45 @@ export default function GymLayout({ children }: { children: React.ReactNode }) {
         { icon: LifeBuoy, label: "Soporte", href: `/${slug}/support` },
         { icon: Settings, label: "Configuración", href: `/${slug}/settings` },
     ];
+
+    // Paywall
+    if (subStatus === "loading") {
+        return (
+            <div className="min-h-screen bg-jimbo-black flex items-center justify-center">
+                <div className="text-jimbo-muted text-sm">Verificando suscripción...</div>
+            </div>
+        );
+    }
+
+    if (subStatus === "inactive") {
+        return (
+            <div className="min-h-screen bg-jimbo-black flex items-center justify-center px-6">
+                <div className="fixed inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(0,255,136,0.03) 0%, transparent 60%)" }} />
+                <div className="relative w-full max-w-md text-center">
+                    <div className="w-20 h-20 rounded-full bg-jimbo-accent/10 flex items-center justify-center mx-auto mb-6">
+                        <Lock className="w-10 h-10 text-jimbo-accent" />
+                    </div>
+                    <h1 className="text-3xl font-black text-jimbo-white mb-3">Activa tu suscripción</h1>
+                    <p className="text-jimbo-muted mb-8">Para acceder al panel de <span className="text-jimbo-accent font-bold">{slug}</span>, necesitas una suscripción activa.</p>
+                    <div className="bg-jimbo-card border border-jimbo-border rounded-2xl p-6 mb-6">
+                        <p className="text-jimbo-muted text-sm mb-1">Jimbo — Suscripción Mensual</p>
+                        <div className="flex items-end justify-center gap-1 mb-4">
+                            <span className="text-4xl font-black text-jimbo-white">$400</span>
+                            <span className="text-jimbo-muted mb-1">MXN/mes</span>
+                        </div>
+                        <button onClick={handleCheckout} disabled={checkoutLoading}
+                            className="w-full bg-jimbo-accent text-jimbo-black py-3 rounded-xl font-bold hover:bg-jimbo-accent-dim transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50">
+                            {checkoutLoading ? "Redirigiendo a Stripe..." : "Pagar ahora"}
+                            {!checkoutLoading && <ArrowRight className="w-4 h-4" />}
+                        </button>
+                    </div>
+                    <button onClick={() => signOut({ callbackUrl: "/" })} className="text-jimbo-muted text-sm hover:text-jimbo-white transition cursor-pointer">
+                        Cerrar sesión
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-jimbo-black flex">

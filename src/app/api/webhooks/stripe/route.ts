@@ -44,14 +44,14 @@ export async function POST(req: NextRequest) {
         }
 
         case "customer.subscription.updated": {
-            const sub = event.data.object;
-            const stripeSubId = sub.id;
+            const sub = event.data.object as Record<string, unknown>;
+            const stripeSubId = sub.id as string;
 
             await db
                 .update(subscriptions)
                 .set({
                     status: sub.status as "active" | "canceled" | "past_due",
-                    currentPeriodEnd: new Date(sub.current_period_end * 1000),
+                    currentPeriodEnd: new Date((sub.current_period_end as number) * 1000),
                 })
                 .where(eq(subscriptions.stripeSubscriptionId, stripeSubId));
             break;

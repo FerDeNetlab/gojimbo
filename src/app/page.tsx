@@ -381,6 +381,81 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ─── ASÍ DE FÁCIL ─── */}
+      <section className="py-28 relative" style={{ background: "rgba(17,17,17,0.5)" }}>
+        <div className="max-w-5xl mx-auto px-6">
+          <Reveal className="text-center mb-16">
+            <p className="text-jimbo-accent text-sm font-semibold tracking-widest uppercase mb-3">Sin complicaciones</p>
+            <h2 className="text-4xl md:text-5xl font-black">Así de fácil</h2>
+            <p className="text-jimbo-muted text-lg mt-4 max-w-2xl mx-auto">
+              No necesitas instalaciones, servidores, ni técnicos. Contratas, configuras tu gym en 2 minutos, y ya tienes tu software funcionando.
+            </p>
+          </Reveal>
+
+          {/* Steps */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            {[
+              {
+                step: "01",
+                title: "Contrata tu plan",
+                desc: "Pagas $400 MXN/mes con tarjeta. Sin contratos, sin letras chiquitas. Cancela cuando quieras.",
+                accent: true,
+              },
+              {
+                step: "02",
+                title: "Configura tu gym",
+                desc: "Ponle nombre, sube tu logo y listo. Tu sistema queda en tugimnasio.gojimbo.mx en segundos.",
+                accent: false,
+              },
+              {
+                step: "03",
+                title: "¡Listo! Ya eres pro",
+                desc: "Empieza a dar de alta miembros, cobrar membresías y controlar accesos. Todo desde tu celular o compu.",
+                accent: false,
+              },
+            ].map((s, i) => (
+              <Reveal key={i} delay={i * 0.1}>
+                <div className={`relative p-8 rounded-2xl border ${s.accent ? "border-jimbo-accent/30 bg-jimbo-accent/5" : "border-jimbo-border bg-jimbo-card/30"} h-full`}>
+                  <span className={`text-5xl font-black ${s.accent ? "text-jimbo-accent" : "text-jimbo-border"}`}>{s.step}</span>
+                  <h3 className="text-xl font-bold text-jimbo-white mt-4 mb-2">{s.title}</h3>
+                  <p className="text-jimbo-muted text-sm leading-relaxed">{s.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          {/* What you get */}
+          <Reveal>
+            <div className="bg-jimbo-card/50 border border-jimbo-border rounded-2xl p-8 md:p-10">
+              <h3 className="text-2xl font-bold text-jimbo-white mb-6 text-center">¿Qué recibes por $400/mes?</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {[
+                  "Tu propio sistema en tugimnasio.gojimbo.mx",
+                  "Panel de administración con tu logo",
+                  "Alta ilimitada de miembros",
+                  "Cobro de membresías con tarjeta",
+                  "Control de acceso con reconocimiento facial",
+                  "Notificaciones por WhatsApp, email y SMS",
+                  "Inventario de equipo y activos",
+                  "Reportes y métricas en tiempo real",
+                  "Soporte técnico incluido",
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <CheckCircle2 className="w-4 h-4 text-jimbo-accent mt-0.5 flex-shrink-0" />
+                    <span className="text-sm text-jimbo-white">{item}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="text-center mt-8">
+                <a href="#precios" className="inline-flex items-center gap-2 bg-jimbo-white text-jimbo-black px-8 py-4 rounded-full font-bold text-lg hover:bg-jimbo-accent transition-all duration-300 hover:scale-105">
+                  Quiero mi sistema <ArrowRight className="w-5 h-5" />
+                </a>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ─── DEMOS ─── */}
       <section id="demos" className="py-28 relative" style={{ background: "rgba(17,17,17,0.5)" }}>
         <div className="max-w-7xl mx-auto px-6">

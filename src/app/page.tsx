@@ -289,7 +289,7 @@ export default function LandingPage() {
               <a key={label} href={`#${label.toLowerCase()}`} className="text-jimbo-muted hover:text-jimbo-white transition-colors duration-200">{label}</a>
             ))}
           </div>
-          <a href="#precios" className="bg-jimbo-white text-jimbo-black px-5 py-2 rounded-full text-sm font-semibold hover:bg-jimbo-accent transition-all duration-300">
+          <a href="/register" className="bg-jimbo-white text-jimbo-black px-5 py-2 rounded-full text-sm font-semibold hover:bg-jimbo-accent transition-all duration-300">
             Comenzar
           </a>
         </div>
@@ -326,7 +326,7 @@ export default function LandingPage() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="#precios" className="group flex items-center gap-2 bg-jimbo-white text-jimbo-black px-8 py-4 rounded-full font-bold text-lg hover:bg-jimbo-accent transition-all duration-300 hover:scale-105">
+            <a href="/register?plan=subscription" className="group flex items-center gap-2 bg-jimbo-white text-jimbo-black px-8 py-4 rounded-full font-bold text-lg hover:bg-jimbo-accent transition-all duration-300 hover:scale-105">
               Empezar ahora
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
@@ -447,7 +447,7 @@ export default function LandingPage() {
                 ))}
               </div>
               <div className="text-center mt-8">
-                <a href="#precios" className="inline-flex items-center gap-2 bg-jimbo-white text-jimbo-black px-8 py-4 rounded-full font-bold text-lg hover:bg-jimbo-accent transition-all duration-300 hover:scale-105">
+                <a href="/register?plan=subscription" className="inline-flex items-center gap-2 bg-jimbo-white text-jimbo-black px-8 py-4 rounded-full font-bold text-lg hover:bg-jimbo-accent transition-all duration-300 hover:scale-105">
                   Quiero mi sistema <ArrowRight className="w-5 h-5" />
                 </a>
               </div>
@@ -562,9 +562,9 @@ export default function LandingPage() {
                   </li>
                 ))}
               </ul>
-              <button className="w-full bg-jimbo-white text-jimbo-black py-4 rounded-full font-bold text-lg hover:bg-jimbo-accent transition-all duration-300 hover:scale-[1.02] cursor-pointer">
+              <a href="/register?plan=subscription" className="block w-full bg-jimbo-white text-jimbo-black py-4 rounded-full font-bold text-lg hover:bg-jimbo-accent transition-all duration-300 hover:scale-[1.02] text-center">
                 Comenzar ahora
-              </button>
+              </a>
               <p className="text-center text-xs text-jimbo-muted mt-4">Cancela cuando quieras · Sin compromisos</p>
             </div>
           </Reveal>
@@ -594,7 +594,7 @@ export default function LandingPage() {
           <p className="text-jimbo-muted text-lg mb-10 max-w-xl mx-auto">
             Únete a los gimnasios que ya administran todo con Jimbo. Empieza hoy, sin compromisos.
           </p>
-          <a href="#precios" className="inline-flex items-center gap-2 bg-jimbo-white text-jimbo-black px-10 py-5 rounded-full font-bold text-xl hover:bg-jimbo-accent transition-all duration-300 hover:scale-105">
+          <a href="/register?plan=subscription" className="inline-flex items-center gap-2 bg-jimbo-white text-jimbo-black px-10 py-5 rounded-full font-bold text-xl hover:bg-jimbo-accent transition-all duration-300 hover:scale-105">
             Empezar con Jimbo <ArrowRight className="w-6 h-6" />
           </a>
         </Reveal>

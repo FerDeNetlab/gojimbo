@@ -1,7 +1,7 @@
-import { auth } from "@/lib/auth";
+import { authMiddleware } from "@/lib/auth.edge";
 import { NextResponse } from "next/server";
 
-export default auth((req) => {
+export default authMiddleware((req) => {
     const { pathname } = req.nextUrl;
     const isAuthenticated = !!req.auth;
 

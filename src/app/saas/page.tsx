@@ -51,7 +51,7 @@ export default function SaaSDashboard() {
                     <h3 className="text-sm font-bold text-jimbo-white mb-1">Tickets de soporte</h3>
                     <p className="text-xs text-jimbo-muted">Gestionar solicitudes de ayuda de los clientes.</p>
                 </Link>
-                <Link href="/admin" className="bg-jimbo-accent/10 border border-jimbo-accent/30 rounded-xl p-5 hover:bg-jimbo-accent/20 transition-all group">
+                <Link href="/netlab" className="bg-jimbo-accent/10 border border-jimbo-accent/30 rounded-xl p-5 hover:bg-jimbo-accent/20 transition-all group">
                     <ArrowUpRight className="w-6 h-6 text-jimbo-accent mb-3" />
                     <h3 className="text-sm font-bold text-jimbo-accent mb-1">Ir al producto</h3>
                     <p className="text-xs text-jimbo-muted">Abrir el panel de administración de gym (entorno de pruebas).</p>

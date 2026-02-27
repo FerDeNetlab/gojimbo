@@ -5,37 +5,38 @@ export default authMiddleware((req) => {
     const { pathname } = req.nextUrl;
     const isAuthenticated = !!req.auth;
 
-    // Protected routes
-    const protectedPaths = ["/dashboard", "/onboarding", "/sistemabase"];
+    // Protected routes (gym product)
+    const protectedPaths = ["/admin", "/onboarding"];
     const isProtected = protectedPaths.some((p) => pathname.startsWith(p));
 
-    // Admin routes
-    const isAdmin = pathname.startsWith("/admin");
+    // SaaS routes (superadmin only)
+    const isSaaS = pathname.startsWith("/saas");
 
-    if (isProtected && !isAuthenticated) {
+    if ((isProtected || isSaaS) && !isAuthenticated) {
         return NextResponse.redirect(new URL("/login", req.url));
     }
 
-    if (isAdmin && !isAuthenticated) {
-        return NextResponse.redirect(new URL("/login", req.url));
-    }
-
-    if (isAdmin && req.auth?.user) {
+    // SaaS: only superadmin
+    if (isSaaS && req.auth?.user) {
         const role = (req.auth.user as { role?: string }).role;
-        if (role !== "admin") {
-            return NextResponse.redirect(new URL("/dashboard", req.url));
+        if (role !== "superadmin") {
+            return NextResponse.redirect(new URL("/admin", req.url));
         }
     }
 
     // Redirect logged-in users away from login/register
     const authPaths = ["/login", "/register"];
     if (authPaths.includes(pathname) && isAuthenticated) {
-        return NextResponse.redirect(new URL("/dashboard", req.url));
+        const role = (req.auth?.user as { role?: string })?.role;
+        if (role === "superadmin") {
+            return NextResponse.redirect(new URL("/saas", req.url));
+        }
+        return NextResponse.redirect(new URL("/admin", req.url));
     }
 
     return NextResponse.next();
 });
 
 export const config = {
-    matcher: ["/dashboard/:path*", "/onboarding/:path*", "/admin/:path*", "/sistemabase/:path*", "/login", "/register"],
+    matcher: ["/admin/:path*", "/onboarding/:path*", "/saas/:path*", "/login", "/register"],
 };

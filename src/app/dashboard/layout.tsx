@@ -1,0 +1,108 @@
+"use client";
+
+import { useSession, signOut } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
+import {
+    Users,
+    ScanFace,
+    Package,
+    CreditCard,
+    Bell,
+    BarChart3,
+    Settings,
+    LogOut,
+    Menu,
+    X,
+    DoorOpen,
+} from "lucide-react";
+import { useState } from "react";
+
+const navItems = [
+    { icon: BarChart3, label: "Dashboard", href: "/dashboard" },
+    { icon: Users, label: "Miembros", href: "/dashboard/members" },
+    { icon: ScanFace, label: "Acceso", href: "/dashboard/access" },
+    { icon: CreditCard, label: "Pagos", href: "/dashboard/payments" },
+    { icon: Package, label: "Inventario", href: "/dashboard/inventory" },
+    { icon: Bell, label: "Notificaciones", href: "/dashboard/notifications" },
+    { icon: DoorOpen, label: "JimboKit", href: "/dashboard/jimbokit" },
+    { icon: Settings, label: "Configuración", href: "/dashboard/settings" },
+];
+
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+    const { data: session } = useSession();
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    return (
+        <div className="min-h-screen bg-jimbo-black flex">
+            {/* Sidebar */}
+            <aside className={`fixed inset-y-0 left-0 z-40 w-64 bg-jimbo-dark border-r border-jimbo-border transform transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 lg:static`}>
+                <div className="h-full flex flex-col">
+                    {/* Logo */}
+                    <div className="h-16 flex items-center justify-between px-6 border-b border-jimbo-border">
+                        <Image src="/images/jimbo-logo-white.png" alt="Jimbo" width={100} height={32} className="h-7 w-auto" />
+                        <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-jimbo-muted hover:text-jimbo-white">
+                            <X className="w-5 h-5" />
+                        </button>
+                    </div>
+
+                    {/* Nav items */}
+                    <nav className="flex-1 p-4 space-y-1">
+                        {navItems.map((item) => (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-jimbo-muted hover:text-jimbo-white hover:bg-jimbo-card transition-all duration-200 text-sm"
+                            >
+                                <item.icon className="w-5 h-5" />
+                                <span>{item.label}</span>
+                            </Link>
+                        ))}
+                    </nav>
+
+                    {/* User */}
+                    <div className="p-4 border-t border-jimbo-border">
+                        <div className="flex items-center gap-3 mb-3">
+                            <div className="w-8 h-8 rounded-full bg-jimbo-accent/20 flex items-center justify-center text-jimbo-accent text-sm font-bold">
+                                {session?.user?.name?.charAt(0)?.toUpperCase() || "J"}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <p className="text-sm text-jimbo-white truncate">{session?.user?.name || "Usuario"}</p>
+                                <p className="text-xs text-jimbo-muted truncate">{session?.user?.email}</p>
+                            </div>
+                        </div>
+                        <button
+                            onClick={() => signOut({ callbackUrl: "/" })}
+                            className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-jimbo-muted hover:text-jimbo-danger hover:bg-jimbo-danger/10 transition-all duration-200 text-sm cursor-pointer"
+                        >
+                            <LogOut className="w-4 h-4" />
+                            <span>Cerrar sesión</span>
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            {/* Mobile overlay */}
+            {sidebarOpen && <div className="fixed inset-0 bg-black/50 z-30 lg:hidden" onClick={() => setSidebarOpen(false)} />}
+
+            {/* Main */}
+            <div className="flex-1 flex flex-col min-h-screen">
+                {/* Top bar */}
+                <header className="h-16 border-b border-jimbo-border flex items-center justify-between px-6">
+                    <button onClick={() => setSidebarOpen(true)} className="lg:hidden text-jimbo-muted hover:text-jimbo-white">
+                        <Menu className="w-5 h-5" />
+                    </button>
+                    <div className="hidden lg:block" />
+                    <div className="text-sm text-jimbo-muted">
+                        {new Date().toLocaleDateString("es-MX", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+                    </div>
+                </header>
+
+                {/* Content */}
+                <main className="flex-1 p-6 lg:p-8">
+                    {children}
+                </main>
+            </div>
+        </div>
+    );
+}

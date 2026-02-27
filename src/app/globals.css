@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+/* ── Jimbo Design Tokens ── */
+@theme {
+  --color-jimbo-black: #0a0a0a;
+  --color-jimbo-dark: #111111;
+  --color-jimbo-card: #1a1a1a;
+  --color-jimbo-border: #2a2a2a;
+  --color-jimbo-muted: #888888;
+  --color-jimbo-accent: #00ff88;
+  --color-jimbo-accent-dim: #00cc6a;
+  --color-jimbo-white: #ffffff;
+  --color-jimbo-danger: #ff4444;
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ── Base styles (inside @layer so they don't override utilities) ── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: #0a0a0a;
+    color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0a0a0a;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
+
+/* ── Custom component classes ── */
+@layer components {
+  .gradient-text {
+    background: linear-gradient(135deg, #00ff88 0%, #00cc6a 50%, #00ff88 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glow-accent {
+    box-shadow: 0 0 40px rgba(0, 255, 136, 0.12), 0 0 80px rgba(0, 255, 136, 0.06);
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .demo-window {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .demo-titlebar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    background: #111111;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .demo-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .demo-dot-red {
+    background: #ff5f57;
+  }
+
+  .demo-dot-yellow {
+    background: #ffbd2e;
+  }
+
+  .demo-dot-green {
+    background: #28c840;
+  }
+}
+
+/* ── Animations (outside layers is fine for keyframes) ── */
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@layer utilities {
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+}
